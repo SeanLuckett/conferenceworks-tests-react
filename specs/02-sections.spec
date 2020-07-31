@@ -13,13 +13,11 @@ To view the report:
 ```shell
 $ open reports/html-report/index.html
 ``` 
+## Verify we have a header
+
+* Goto the ConferenceWorks homepage 
+* Search for "ConferenceWorks" by xpath "//header//h1"
 
 ## Verify the cw-footer element is on the page
 
 * Goto the ConferenceWorks homepage 
-* Search for element "cw-footer"
-
-## Verify the cw-header element is on the page
-
-* Goto the ConferenceWorks homepage 
-* Search for element "cw-header"

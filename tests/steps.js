@@ -4,8 +4,8 @@ const { openBrowser, closeBrowser, goto, text, $, intercept, click, textBox, toR
 const assert = require('assert');
 const headless = process.env.headless_chrome.toLowerCase() === 'true';
 
-let conferenceWorksUrl = "https://thirstyhead.com/conferenceworks/";
-// let conferenceWorksUrl = "http://localhost:8888/conferenceworks/";
+// let conferenceWorksUrl = "https://thirstyhead.com/conferenceworks/";
+let conferenceWorksUrl = "http://localhost:3000/";
 
 beforeSuite(async () => {
     await openBrowser({ headless: headless })
@@ -29,6 +29,10 @@ step("Search for <teststring>", async (teststring) => {
 
 step("Search for element <element>", async (element) => {
     assert.ok(await $(element).exists());
+});
+
+step("Search for <textstring> by xpath <selector>", async (text, selector) => {
+    assert.ok(await $(`${selector}[text()=${text}]`).exists());
 });
 
 step("Visit and search <table>", async (table) => {
