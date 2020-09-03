@@ -8,73 +8,86 @@ const headless = process.env.headless_chrome.toLowerCase() === 'true';
 let conferenceWorksUrl = "http://localhost:3000/";
 
 beforeSuite(async () => {
-    await openBrowser({ headless: headless })
+  await openBrowser({ headless: headless })
 });
 
 afterSuite(async () => {
-    await closeBrowser();
+  await closeBrowser();
 });
 
 step(['Goto the ConferenceWorks homepage', 'Goto ConferenceWorks'], async () => {
-    await goto(conferenceWorksUrl);
+  await goto(conferenceWorksUrl);
 });
 
 step('Goto <page>', async (page) => {
-    await goto(`${conferenceWorksUrl}${page}`);
+  await goto(`${conferenceWorksUrl}${page}`);
 });
 
 step("Search for <teststring>", async (teststring) => {
-    assert.ok(await text(teststring).exists());
+  assert.ok(await text(teststring).exists());
 });
 
 step("Search for element <element>", async (element) => {
-    assert.ok(await $(element).exists());
+  assert.ok(await $(element).exists());
 });
 
-step("Search for <textstring> by xpath <selector>", async (text, selector) => {
-    assert.ok(await $(`${selector}[text()=${text}]`).exists());
+step("Search for <textstring> by xpath <selector>", async (expectedText, selector) => {
+  assert.ok(await $(selector).text() === expectedText);
 });
 
 step("Visit and search <table>", async (table) => {
-    // NOTE: Do not use forEach with async calls
-    // table.rows.forEach(async (row) => {
-    for(let row of table.rows){
-      let page = row.cells[0];
-      let search = row.cells[1];
-      gauge.message(`About to visit ${page}`);
-      await goto(`${conferenceWorksUrl}${page}`);
-      assert.ok(await text(search).exists());
-    }
+  // NOTE: Do not use forEach with async calls
+  // table.rows.forEach(async (row) => {
+  for (let row of table.rows) {
+    let page = row.cells[0];
+    let search = row.cells[1];
+    gauge.message(`About to visit ${page}`);
+    await goto(`${conferenceWorksUrl}${page}`);
+    assert.ok(await text(search).exists());
+  }
 });
 
-step("Mock Schedule microservice", async function() {
-    let mockJson = {"sessions": [
-            {
-                "slot": "gh-1",
-                "talk": "Fun with Cheese",
-                "speaker": "Scott"
-            }
-        ]};
-
-    await intercept("/conferenceworks/schedule/schedule.json", { "body": JSON.stringify(mockJson)});
+step("Click and search from <table> <pageLink>", async (pageLink, table) => {
+  // NOTE: Do not use forEach with async calls
+  // table.rows.forEach(async (row) => {
+  for (let row of table.rows) {
+    let name = row.cells[0];
+    let search = row.cells[1];
+    await click(name);
+    assert.ok(await text(search).exists());
+    await click(pageLink);
+  }
 });
 
-step("Click <element>", async function(element) {
-	await click(element);
+step("Mock Schedule microservice", async function () {
+  let mockJson = {
+    "sessions": [
+      {
+        "slot": "gh-1",
+        "talk": "Fun with Cheese",
+        "speaker": "Scott"
+      } ]
+     };
+
+  await intercept("/conferenceworks/schedule/schedule.json", { "body": JSON.stringify(mockJson) });
 });
 
-step("Verify <message> is next to <field>", async function(message, field) {
-	assert.ok(await text(message, toRightOf(textBox(field))).exists());
+step("Click <element>", async function (element) {
+  await click(element);
 });
 
-step("Write <value>", async function(value) {
-	await write(value);
+step("Verify <message> is next to <field>", async function (message, field) {
+  assert.ok(await text(message, toRightOf(textBox(field))).exists());
 });
 
-step("Verify field <fieldname> is valid", async function(fieldname) {
-    assert.ok(await evaluate( textBox(fieldname), (el) => el.matches(':valid') ));
+step("Write <value>", async function (value) {
+  await write(value);
 });
 
-step("Verify field <fieldname> is invalid", async function(fieldname) {
-    assert.ok(await evaluate( textBox(fieldname), (el) => el.matches(':invalid') ));
+step("Verify field <fieldname> is valid", async function (fieldname) {
+  assert.ok(await evaluate(textBox(fieldname), (el) => el.matches(':valid')));
+});
+
+step("Verify field <fieldname> is invalid", async function (fieldname) {
+  assert.ok(await evaluate(textBox(fieldname), (el) => el.matches(':invalid')));
 });

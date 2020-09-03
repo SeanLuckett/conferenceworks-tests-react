@@ -21,3 +21,4 @@ $ open reports/html-report/index.html
 ## Verify the cw-footer element is on the page
 
 * Goto the ConferenceWorks homepage 
+* Search for "Conference" by xpath "//footer//span"

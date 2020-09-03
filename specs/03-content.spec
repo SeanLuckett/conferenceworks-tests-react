@@ -16,32 +16,32 @@ $ open reports/html-report/index.html
 
 ## Exercise navigation links
 * Goto the ConferenceWorks homepage
-* Goto "speakers"
-* Search for "Speakers"
-* Goto "schedule"
-* Search for "Schedule"
+* Click "schedule"
+* Search for "Grace Hopper Ballroom"
+* Goto the ConferenceWorks homepage
+* Click "Speakers"
+* Search for "Venkat Subramaniam"
 
 ## Exercise navigations links with a table
 * Goto ConferenceWorks
 * Visit and search
 
-|page    |search  |
-|--------|--------|
-|speakers|Speakers|
-|schedule|Schedule|
+|page    |search               |
+|--------|---------------------|
+|speakers|Venkat Subramaniam   |
+|schedule|Grace Hopper Ballroom|
 
 ## Visit each speaker's details page
 * Goto ConferenceWorks
-* Visit and search
+* Click "Speakers"
+* Click and search from "speakers"
 
-|page             |search     |
-|-----------------|-----------|
-|speakers/venkat  |Subramaniam|
-|speakers/rebecca |Parsons    |
-|speakers/neal    |Ford       |
-|speakers/mark    |Richards   |
-|speakers/brian   |Sletten    |
-|speakers/scott   |Davis      |
-
-
+|speaker |search                                  |
+|--------|----------------------------------------|
+|Venkat  |Exploring Modern JavaScript             |
+|Rebecca |Principles of Evolutionary Architecture |
+|Neal    |Architecture: The Hard Parts            |
+|Mark    |Microservices Migration Patterns        |
+|Brian   |The Decentralized Web                   |
+|Scott   |Deconstructing the Modern Web Browser   |
 
